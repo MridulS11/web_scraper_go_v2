@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"web_scraper_v2/internals/fetcher"
+	fileslice "web_scraper_v2/internals/fileSlice"
 )
 
 func UploadHandler(){
@@ -15,23 +17,28 @@ func UploadHandler(){
 	fmt.Println("Looking For File Upload...")
 
 	var matches []string
+	var urls []string
 
 	timeout := time.After(30 * time.Second)
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 
-	for{
-		select{
-		case <- timeout:
-			fmt.Println("File Not Received")
-			os.Exit(1)
-		case <- ticker.C:
-			matches, _ = filepath.Glob(filepath.Join(fullpath, "*.txt"))
-			if len(matches) > 0 {
-				fmt.Println("File Received:", matches[0])
-				return
+	searchLoop:
+		for{
+			select{
+			case <- timeout:
+				fmt.Println("File Not Received")
+				os.Exit(1)
+			case <- ticker.C:
+				matches, _ = filepath.Glob(filepath.Join(fullpath, "*.txt"))
+				if len(matches) > 0 {
+					fmt.Println("File Received:", matches[0])
+					break searchLoop
+				}
 			}
 		}
-	}
+
+	urls = fileslice.FileReader(matches[0])
+	fetcher.Scraper(urls)
 	
 }

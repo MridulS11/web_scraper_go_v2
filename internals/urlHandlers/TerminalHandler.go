@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"web_scraper_v2/configs"
+	"web_scraper_v2/internals/fetcher"
 )
 
 func TerminalHandler(){
@@ -35,5 +36,5 @@ func TerminalHandler(){
 
 		count++
 	}
-	fmt.Println(myArgs)
+	fetcher.Scraper(myArgs)
 }
