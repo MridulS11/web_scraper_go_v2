@@ -6,6 +6,7 @@ import (
 	"log"
 	"web_scraper_v2/configs"
 	"web_scraper_v2/internals/fetcher"
+	fileslice "web_scraper_v2/internals/fileSlice"
 )
 
 func TerminalHandler(){
@@ -36,5 +37,6 @@ func TerminalHandler(){
 
 		count++
 	}
-	fetcher.Scraper(myArgs)
+	fileslice.SliceToFile(myArgs)
+	fetcher.Scraper()
 }

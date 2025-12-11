@@ -17,7 +17,6 @@ func UploadHandler(){
 	fmt.Println("Looking For File Upload...")
 
 	var matches []string
-	var urls []string
 
 	timeout := time.After(30 * time.Second)
 	ticker := time.NewTicker(1 * time.Second)
@@ -38,7 +37,7 @@ func UploadHandler(){
 			}
 		}
 
-	urls = fileslice.FileReader(matches[0])
-	fetcher.Scraper(urls)
+	fileslice.FileReader(matches[0])
+	fetcher.Scraper()
 	
 }

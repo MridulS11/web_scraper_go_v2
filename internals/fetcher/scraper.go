@@ -4,6 +4,6 @@ import (
 
 )
 
-func Scraper([]string){
+func Scraper(){
 	
 }
