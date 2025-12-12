@@ -5,8 +5,9 @@ import (
 	"os"
 	"path/filepath"
 	"time"
-	"web_scraper_v2/internals/fetcher"
+
 	fileslice "web_scraper_v2/internals/fileSlice"
+	"web_scraper_v2/internals/worker"
 )
 
 func UploadHandler(){
@@ -38,6 +39,6 @@ func UploadHandler(){
 		}
 
 	fileslice.FileReader(matches[0])
-	fetcher.Scraper()
+	worker.ScraperPool()
 	
 }

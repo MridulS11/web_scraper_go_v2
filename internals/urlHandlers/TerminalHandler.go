@@ -5,8 +5,8 @@ import (
 	"io"
 	"log"
 	"web_scraper_v2/configs"
-	"web_scraper_v2/internals/fetcher"
 	fileslice "web_scraper_v2/internals/fileSlice"
+	"web_scraper_v2/internals/worker"
 )
 
 func TerminalHandler(){
@@ -23,11 +23,9 @@ func TerminalHandler(){
 
 		_, err := fmt.Scan(&url)
 
-		if url != "Exit()"{
+		if url != "Exit()" || err == io.EOF{
 			myArgs = append(myArgs, url)
-		}
-
-		if err == io.EOF || url == "Exit()"{
+		} else{
 			break
 		}
 
@@ -38,5 +36,5 @@ func TerminalHandler(){
 		count++
 	}
 	fileslice.SliceToFile(myArgs)
-	fetcher.Scraper()
+	worker.ScraperPool()
 }
