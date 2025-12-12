@@ -3,6 +3,7 @@ package fetcher
 import (
 	"bufio"
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -30,6 +31,7 @@ func Scraper(ctx context.Context, url string){
 	resp, err := client.Do(req)
 	if err != nil{
 		log.Println("Error Encountered: ", err)
+		return
 	}
 	defer resp.Body.Close()
 
@@ -52,14 +54,14 @@ func Scraper(ctx context.Context, url string){
 
 	filename := base + ".txt"
 		
-	file, err := os.OpenFile(configs.OutPath+filename, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0622)
+	file, err := os.OpenFile(configs.OutPath+filename, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
 	if err != nil{
 		log.Println("Error Encountered:", err)
 	}
 	defer file.Close()
 	br := bufio.NewWriter(file)
-
-	doc.Find("#mw-content-text p").Each(func(i int, s *goquery.Selection) {
+	log.Println(base + resp.Status)
+	doc.Find("p").Each(func(i int, s *goquery.Selection) {
 		text := s.Text()
 
 		if len(text) > 0{
@@ -73,6 +75,8 @@ func Scraper(ctx context.Context, url string){
 			}
 		}
 	})
+
+	fmt.Println("Task Completed")
 
 	br.Flush()
 
