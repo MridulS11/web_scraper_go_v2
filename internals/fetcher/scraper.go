@@ -40,6 +40,9 @@ func Scraper(ctx context.Context, url string){
 
 	base := filepath.Base(url)
 
+	if strings.HasPrefix(base, "https://"){
+		base = strings.Replace(base, "www.", "", 1)
+	}
 	if strings.HasPrefix(base, "www."){
 		base = strings.Replace(base, "www.", "", 1)
 	}
@@ -53,6 +56,7 @@ func Scraper(ctx context.Context, url string){
 	if err != nil{
 		log.Println("Error Encountered:", err)
 	}
+	defer file.Close()
 	br := bufio.NewWriter(file)
 
 	doc.Find("#mw-content-text p").Each(func(i int, s *goquery.Selection) {
@@ -70,5 +74,6 @@ func Scraper(ctx context.Context, url string){
 		}
 	})
 
+	br.Flush()
 
 }

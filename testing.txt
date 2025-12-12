@@ -1,2 +1,1 @@
-Word, left, right, queen
-Prince, damage
+https://ziglang.org/news/migrating-from-github-to-codeberg/, https://pkg.go.dev/bufio#NewReader, https://en.wikipedia.org/wiki/Dog, https://github.com/MridulS11/web_scraper_go_v2, https://www.redhat.com/en/blog/linux-file-permissions-explained
