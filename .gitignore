@@ -5,5 +5,3 @@ output/metrics/*
 
 # Don't ignore metrics folder
 !output/metrics/
-
-.gitkeep
