@@ -16,7 +16,9 @@ import (
 )
 
 func ScraperPool(){
-	
+
+	start := time.Now()
+
 	var wg sync.WaitGroup
 	workers_count := 100
 	jobs := make(chan string, workers_count)
@@ -49,6 +51,7 @@ func ScraperPool(){
 		jobs <- br.Text()
 	}
 
+	json.IncrementGoTime(time.Since(start))
 	close(jobs)
 	wg.Wait()
 	jsonhandler.Json_handle(json)
@@ -59,5 +62,5 @@ func ScraperPool(){
 
 	<- quit
 	log.Println("Closing the endpoint!!")
-	
+
 }

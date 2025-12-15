@@ -11,6 +11,7 @@ type Metrics struct {
 	ErrorsEncountered atomic.Uint64 `json:"Errors"`
 	BytesDownloaded int `json:"Memory"`
 	TimeTaken time.Duration `json:"Time_Consumed"`
+	GoRoutineTime time.Duration `json:"Go_Routine_Duration"`
 	mu sync.Mutex
 }
 
@@ -36,11 +37,19 @@ func (m * Metrics) IncrementTime(t time.Duration) time.Duration{
 	return m.TimeTaken
 }
 
+func (m * Metrics) IncrementGoTime(t time.Duration) time.Duration{
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.GoRoutineTime = m.GoRoutineTime + t
+	return m.GoRoutineTime
+}
+
 type MetricsSnapshot struct {
 	UrlsProcessed     uint64  `json:"urls_processed"`
 	ErrorsEncountered uint64  `json:"errors"`
 	BytesDownloaded   int `json:"memory"`
 	TimeTaken         time.Duration     `json:"time_consumed"`
+	GoRoutineTime time.Duration `json:"go_routine_duration"`
 }
 
 func (m * Metrics) Snapshot() MetricsSnapshot {
@@ -49,5 +58,6 @@ func (m * Metrics) Snapshot() MetricsSnapshot {
 		ErrorsEncountered: m.ErrorsEncountered.Load(),
 		BytesDownloaded:   m.BytesDownloaded,
 		TimeTaken:         m.TimeTaken,
+		GoRoutineTime: m.GoRoutineTime,
 	}
 }
