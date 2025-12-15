@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 	"web_scraper_v2/configs"
-	"web_scraper_v2/endpoint"
+	"web_scraper_v2/internals/endpoint"
 	"web_scraper_v2/internals/fetcher"
 	jsonhandler "web_scraper_v2/internals/jsonHandler"
 )
