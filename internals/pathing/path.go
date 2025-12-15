@@ -6,6 +6,7 @@ import (
 )
 
 func Path(choice int){
+	
 	switch choice{
 	case 1:
 		urlhandlers.UploadHandler()

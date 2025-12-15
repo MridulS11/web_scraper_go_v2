@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 	"web_scraper_v2/configs"
-	fileslice "web_scraper_v2/internals/fileSlice"
+	"web_scraper_v2/internals/fileHandlers"
 	"web_scraper_v2/internals/worker"
 )
 
@@ -35,6 +35,6 @@ func TerminalHandler(){
 
 		count++
 	}
-	fileslice.SliceToFile(myArgs)
+	fileHandlers.SliceToFile(myArgs)
 	worker.ScraperPool()
 }

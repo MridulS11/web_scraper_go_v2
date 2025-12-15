@@ -1,4 +1,4 @@
-package fileslice
+package fileHandlers
 
 import (
 	"bufio"

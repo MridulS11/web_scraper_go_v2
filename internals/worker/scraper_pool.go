@@ -8,7 +8,9 @@ import (
 	"sync"
 	"time"
 	"web_scraper_v2/configs"
+	"web_scraper_v2/endpoint"
 	"web_scraper_v2/internals/fetcher"
+	jsonhandler "web_scraper_v2/internals/jsonHandler"
 )
 
 func ScraperPool(){
@@ -25,13 +27,16 @@ func ScraperPool(){
 	}
 	defer f.Close()
 
+	json := &jsonhandler.Metrics{}
+
 	for i := 0; i < workers_count ; i++{
 		wg.Go(func() {
 			for job := range jobs{
 				ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
-				fetcher.Scraper(ctx, job)
+				fetcher.Scraper(ctx, job, json)
 				if ctx.Err() != nil{
 					log.Println("Error Encountered:", ctx.Err())
+					json.IncrementErrors()
 				}
 				cancel()
 			}
@@ -44,4 +49,6 @@ func ScraperPool(){
 
 	close(jobs)
 	wg.Wait()
+	jsonhandler.Json_handle(json)
+	endpoint.Metric(json.Snapshot())
 }
