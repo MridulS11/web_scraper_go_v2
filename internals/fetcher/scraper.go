@@ -72,7 +72,6 @@ func Scraper(ctx context.Context, url string, json * jsonhandler.Metrics){
 	br := bufio.NewWriter(file)
 	doc.Find("p").Each(func(i int, s *goquery.Selection) {
 		text := s.Text()
-
 		if len(text) > 0{
 			if _, err := br.WriteString(text); err != nil{
 				log.Println("Error Encountered:", err)

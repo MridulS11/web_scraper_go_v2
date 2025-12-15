@@ -18,4 +18,5 @@ func Json_handle(m * Metrics){
 	br.Write(res2)
 	defer file.Close()
 	br.Flush()
+	
 }

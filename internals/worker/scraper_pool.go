@@ -59,4 +59,5 @@ func ScraperPool(){
 
 	<- quit
 	log.Println("Closing the endpoint!!")
+	
 }

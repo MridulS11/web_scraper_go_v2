@@ -15,7 +15,7 @@ func Metric(m jsonhandler.MetricsSnapshot){
 			panic(err)
 		}
 	})
-	log.Println("Starting Server at 8080")
+	log.Println("Metrics Available At Port :8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil{
 		panic(err)
 	}
