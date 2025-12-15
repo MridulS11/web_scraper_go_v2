@@ -2,5 +2,15 @@
  "urls_processed": 6,
  "errors": 0,
  "memory": 1523712,
- "time_consumed": 41301390624
+ "time_consumed": 3779346082
+}{
+ "urls_processed": 6,
+ "errors": 0,
+ "memory": 1523712,
+ "time_consumed": 14883188668
+}{
+ "urls_processed": 6,
+ "errors": 0,
+ "memory": 1523712,
+ "time_consumed": 3208654750
 }
