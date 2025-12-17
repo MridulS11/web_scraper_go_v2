@@ -27,9 +27,7 @@ func Scraper(ctx context.Context, url string, json * jsonhandler.Metrics){
 
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0 Safari/537.36")
 
-	client := &http.Client{
-		Timeout: 30 * time.Second,
-	}
+	client := &http.Client{}
 
 	resp, err := client.Do(req)
 	if err != nil{
@@ -43,6 +41,7 @@ func Scraper(ctx context.Context, url string, json * jsonhandler.Metrics){
 	if err != nil{
 		log.Println("Error Encountered:", err)
 		json.IncrementErrors()
+		return
 	}
 
 	base := filepath.Base(url)
@@ -63,11 +62,12 @@ func Scraper(ctx context.Context, url string, json * jsonhandler.Metrics){
 	if err != nil{
 		log.Println("Error Encountered:", err)
 		json.IncrementErrors()
-	} else{
-		json.IncrementUrls()
+		return
 	}
-
 	defer file.Close()
+
+	json.IncrementUrls()
+
 	br := bufio.NewWriter(file)
 	doc.Find("p").Each(func(i int, s *goquery.Selection) {
 		text := s.Text()

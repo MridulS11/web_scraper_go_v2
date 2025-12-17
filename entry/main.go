@@ -15,7 +15,7 @@ func main(){
 	if err2 != nil{
 		fmt.Println("Error Encountered", err2)
 	}
-	fmt.Print("Enter 1 to work with a file with links(to be uploaded by you in the links folder).\nEnter 2 to paste URLs in the terminal itself.\nInput: ")
+	fmt.Print("Enter 1 to work with a file with links(to be uploaded by you in the 'url' folder).\nEnter 2 to paste URLs in the terminal itself.\nInput: ")
 	var choice int
 	fmt.Scan(&choice)
 	pathing.Path(choice)

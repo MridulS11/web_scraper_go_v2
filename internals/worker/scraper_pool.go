@@ -3,6 +3,7 @@ package worker
 import (
 	"bufio"
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -18,6 +19,8 @@ func ScraperPool(){
 
 	start := time.Now()
 
+	ctx_duration := 3
+
 	var wg sync.WaitGroup
 	workers_count := 100
 	jobs := make(chan string, workers_count)
@@ -32,10 +35,12 @@ func ScraperPool(){
 
 	json := &jsonhandler.Metrics{}
 
+	fmt.Printf("Context Window is %d minutes" + "\n", ctx_duration)
+
 	for i := 0; i < workers_count ; i++{
 		wg.Go(func() {
 			for job := range jobs{
-				ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+				ctx, cancel := context.WithTimeout(context.Background(), time.Duration(ctx_duration) * time.Minute)
 				fetcher.Scraper(ctx, job, json)
 				if ctx.Err() != nil{
 					log.Println("Error Encountered:", ctx.Err())
@@ -55,7 +60,7 @@ func ScraperPool(){
 	wg.Wait()
 
 	jsonhandler.Json_handle(json)
-	
+
 	go endpoint.Metric(json.Snapshot())
 
 	exithandler.ExitFunc()
