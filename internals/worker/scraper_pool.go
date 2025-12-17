@@ -5,12 +5,11 @@ import (
 	"context"
 	"log"
 	"os"
-	"os/signal"
 	"sync"
-	"syscall"
 	"time"
 	"web_scraper_v2/configs"
 	"web_scraper_v2/internals/endpoint"
+	exithandler "web_scraper_v2/internals/exitHandler"
 	"web_scraper_v2/internals/fetcher"
 	jsonhandler "web_scraper_v2/internals/jsonHandler"
 )
@@ -54,13 +53,11 @@ func ScraperPool(){
 	json.IncrementGoTime(time.Since(start))
 	close(jobs)
 	wg.Wait()
+
 	jsonhandler.Json_handle(json)
+	
 	go endpoint.Metric(json.Snapshot())
 
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
-	<- quit
-	log.Println("Closing the endpoint!!")
+	exithandler.ExitFunc()
 
 }

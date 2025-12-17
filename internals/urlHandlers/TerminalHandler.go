@@ -13,7 +13,7 @@ func TerminalHandler(){
 	var myArgs []string
 	count := 1
 
-	fmt.Println("Enter Exit() to exit the program")
+	fmt.Println("Enter Stop() to start scraping.")
 
 
 	for{

@@ -12,7 +12,6 @@ import (
 	"time"
 	"web_scraper_v2/configs"
 	jsonhandler "web_scraper_v2/internals/jsonHandler"
-
 	"github.com/PuerkitoBio/goquery"
 )
 
