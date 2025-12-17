@@ -1,5 +1,7 @@
 url/*
 
+output/*
+
 # Ignore everything in output/metrics
 output/metrics/*
 
